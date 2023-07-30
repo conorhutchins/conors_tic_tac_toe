@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button} from 'react-native';
+import {TouchableOpacity, Text, StyleSheet} from 'react-native';
 
 type Props = {
   value: 'X' | 'O' | null; // The value of the square can be 'X', 'O', or null
@@ -7,5 +7,23 @@ type Props = {
 };
 
 export const Square: React.FC<Props> = ({value, onPress}) => {
-  return <Button onPress={onPress} title={value ? value : ' '} />;
+  return (
+    <TouchableOpacity style={styles.square} onPress={onPress}>
+      <Text style={styles.text}>{value ? value : ' '}</Text>
+    </TouchableOpacity>
+  );
 };
+
+const styles = StyleSheet.create({
+  square: {
+    width: 100,
+    height: 100,
+    borderWidth: 3.5,
+    borderColor: 'black',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  text: {
+    fontSize: 30,
+  },
+});

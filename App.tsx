@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { Text, View, Button} from 'react-native';
-import { Board } from './src/components/Board';
+import React, {useState} from 'react';
+import {Text, View, Button, StyleSheet} from 'react-native';
+import {Board} from './src/components/Board';
 
 function calculateWinner(squares: Array<'X' | 'O' | null>): 'X' | 'O' | null {
   // These are the 8 possible winning combinations
@@ -30,7 +30,7 @@ function calculateWinner(squares: Array<'X' | 'O' | null>): 'X' | 'O' | null {
 const App: React.FC = () => {
   // The state of the game board and whose turn it is
   const [squares, setSquares] = useState<Array<'X' | 'O' | null>>(
-    Array(9).fill(null)
+    Array(9).fill(null),
   );
   const [xIsNext, setXIsNext] = useState<boolean>(true);
 
@@ -63,7 +63,7 @@ const App: React.FC = () => {
   };
   // Render the game board and status message
   return (
-    <View>
+    <View style={styles.container}>
       <Text>{status}</Text>
       <Board squares={squares} onPress={handlePress} />
       {/* New 'Play Again' button */}
@@ -72,4 +72,11 @@ const App: React.FC = () => {
   );
 };
 
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+});
 export default App;
