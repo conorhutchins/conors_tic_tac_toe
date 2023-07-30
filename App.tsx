@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Text, View } from 'react-native';
+import { Text, View, Button} from 'react-native';
 import { Board } from './src/components/Board';
 
 function calculateWinner(squares: Array<'X' | 'O' | null>): 'X' | 'O' | null {
@@ -56,12 +56,18 @@ const App: React.FC = () => {
     setSquares(newSquares);
     setXIsNext(!xIsNext);
   };
-
+  // function to reset the game
+  const handleRestart = () => {
+    setSquares(Array(9).fill(null));
+    setXIsNext(true);
+  };
   // Render the game board and status message
   return (
     <View>
       <Text>{status}</Text>
       <Board squares={squares} onPress={handlePress} />
+      {/* New 'Play Again' button */}
+      <Button onPress={handleRestart} title="Play Again" />
     </View>
   );
 };
