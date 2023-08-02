@@ -1,7 +1,8 @@
 import React, {useState} from 'react';
-import {Text, View, Button, StyleSheet} from 'react-native';
+import {Text, View, StyleSheet, Modal, TouchableOpacity} from 'react-native';
 import {Board} from './src/components/Board';
 
+// Function to calculate the winner
 function calculateWinner(squares: Array<'X' | 'O' | null>): 'X' | 'O' | null {
   // These are the 8 possible winning combinations
   const lines = [
@@ -33,15 +34,16 @@ const App: React.FC = () => {
     Array(9).fill(null),
   );
   const [xIsNext, setXIsNext] = useState<boolean>(true);
+  const [modalVisible, setModalVisible] = useState<boolean>(false);
 
   // Determine the winner
   const winner = calculateWinner(squares);
   // Determine the game status
   let status;
   if (winner) {
-    status = 'The winner is ' + winner + '!';
+    status = 'The winner is ' + winner + '! ';
   } else {
-    status = (xIsNext ? 'X' : 'O') + "it's your turn";
+    status = "No winner! " + (xIsNext ? 'X' : 'O')+"'s" + " goes first next time";
   }
 
   // Handle square presses
@@ -53,21 +55,44 @@ const App: React.FC = () => {
     // Otherwise, fill the square with the current player's mark, update the state, and switch turns
     const newSquares = squares.slice();
     newSquares[index] = xIsNext ? 'X' : 'O';
+    const localWinner = calculateWinner(newSquares); // Calculate the winner here
     setSquares(newSquares);
     setXIsNext(!xIsNext);
+    // If the game is over, show the modal
+    if (localWinner || !newSquares.includes(null)) {
+      setModalVisible(true);
+    }
   };
+
   // function to reset the game
-  const handleRestart = () => {
+  const handleRestartFromModal = () => {
     setSquares(Array(9).fill(null));
     setXIsNext(true);
+    setModalVisible(false);
   };
+
   // Render the game board and status message
   return (
     <View style={styles.container}>
+      <Modal
+        animationType='fade'
+        transparent={true}
+        visible={modalVisible}
+        presentationStyle='overFullScreen'
+      >
+        <View style={styles.modalContainer}>
+          <View style={styles.modalView}>
+            <Text style={styles.modalText}>{status}</Text>
+            <TouchableOpacity
+              style={styles.closeButton}
+              onPress={handleRestartFromModal}>
+              <Text style={styles.textStyle}>Go Again</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
       <Text>{status}</Text>
       <Board squares={squares} onPress={handlePress} />
-      {/* New 'Play Again' button */}
-      <Button onPress={handleRestart} title="Play Again" />
     </View>
   );
 };
@@ -78,5 +103,43 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: '0%',
+    marginBottom: '120%',
+  },
+  modalView: {
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 35,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5
+  },
+  closeButton: {
+    backgroundColor: "orange",
+    borderRadius: 10,
+    padding: 10,
+    elevation: 4,
+    marginTop: 20,
+  },
+  textStyle: {
+    color: "white",
+    fontWeight: "bold",
+    textAlign: "center"
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: "center"
+  }
 });
+
 export default App;
