@@ -2,7 +2,7 @@ import React from 'react';
 import {TouchableOpacity, Text, StyleSheet} from 'react-native';
 
 type Props = {
-  value: 'X' | 'O' | null; // The value of the square can be 'X', 'O', or null
+  value: '❌' | '⭕️' | null; // The value of the square can be 'X', 'O', or null
   onPress: () => void; // This function will be called when the square is pressed
 };
 

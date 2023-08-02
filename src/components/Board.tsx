@@ -3,7 +3,7 @@ import {View, StyleSheet} from 'react-native';
 import {Square} from './Square';
 
 type BoardProps = {
-  squares: ('X' | 'O' | null)[];
+  squares: ('❌' | '⭕️' | null)[];
   onPress: (index: number) => void;
 };
 

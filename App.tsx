@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {Text, View, StyleSheet, Modal, TouchableOpacity} from 'react-native';
 import {Board} from './src/components/Board';
 
-function calculateWinner(squares: Array<'X' | 'O' | null>): 'X' | 'O' | null {
+function calculateWinner(squares: Array<'❌' | '⭕️' | null>): '❌' | '⭕️' | null {
   const lines = [
     [0, 1, 2],
     [3, 4, 5],
@@ -23,7 +23,7 @@ function calculateWinner(squares: Array<'X' | 'O' | null>): 'X' | 'O' | null {
 }
 
 const App: React.FC = () => {
-  const [squares, setSquares] = useState<Array<'X' | 'O' | null>>(
+  const [squares, setSquares] = useState<Array<'❌' | '⭕️' | null>>(
     Array(9).fill(null),
   );
   const [xIsNext, setXIsNext] = useState<boolean>(true);
@@ -34,7 +34,7 @@ const App: React.FC = () => {
   if (winner) {
     status = 'The winner is ' + winner + '! ';
   } else {
-    status = "No winner! " + (xIsNext ? 'O' : 'X')+"'s" + " goes first next time";
+    status = "No winner! " + (xIsNext ? '⭕️' : '❌')+"'s" + " goes first next time";
   }
 
   const handlePress = (index: number) => {
@@ -42,7 +42,7 @@ const App: React.FC = () => {
       return;
     }
     const newSquares = squares.slice();
-    newSquares[index] = xIsNext ? 'X' : 'O';
+    newSquares[index] = xIsNext ? '❌' : '⭕️';
     const localWinner = calculateWinner(newSquares); 
     setSquares(newSquares);
     setXIsNext(!xIsNext);
