@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {Text, View, StyleSheet, Modal, TouchableOpacity} from 'react-native';
 import {Board} from './src/components/Board';
 
-function calculateWinner(squares: Array<'❌' | '⭕️' | null>): '❌' | '⭕️' | null {
+export function calculateWinner(squares: Array<'❌' | '⭕️' | null>): '❌' | '⭕️' | null {
   const lines = [
     [0, 1, 2],
     [3, 4, 5],
