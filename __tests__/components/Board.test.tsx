@@ -1,6 +1,6 @@
 import React from 'react';
 import {render, fireEvent} from '@testing-library/react-native';
-import {Board} from '../src/components/Board';
+import {Board} from '../../src/components/Board';
 
 describe('Board component', () => {
 it('initially renders correctly', () => {

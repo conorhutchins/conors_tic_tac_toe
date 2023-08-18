@@ -1,4 +1,4 @@
-import {calculateWinner} from '../App';
+import {calculateWinner} from '../../App';
 
 describe('testing calculate winner function', () => {
   test('it returns an empty array when passed an empty array', () => {

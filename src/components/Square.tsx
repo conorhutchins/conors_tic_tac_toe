@@ -8,7 +8,7 @@ type Props = {
 
 export const Square: React.FC<Props> = ({value, onPress}) => {
   return (
-    <TouchableOpacity style={styles.square} onPress={onPress}>
+    <TouchableOpacity style={styles.square} onPress={onPress} testID="square">
       <Text style={styles.text}>{value ? value : ' '}</Text>
     </TouchableOpacity>
   );

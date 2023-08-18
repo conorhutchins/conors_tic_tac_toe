@@ -1,6 +1,6 @@
 import React from 'react';
 import {render, fireEvent} from '@testing-library/react-native';
-import {Square} from '../src/components/Square';
+import {Square} from '../../src/components/Square';
 
 describe('Square component', () => {
   it('renders correctly with given value', () => {

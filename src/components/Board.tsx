@@ -9,7 +9,7 @@ type BoardProps = {
 
 export const Board: React.FC<BoardProps> = ({squares, onPress}) => {
   return (
-    <View style={styles.board}>
+    <View style={styles.board} testID="board">
       {squares.map((square, i) => (
         <Square key={i} value={square} onPress={() => onPress(i)} />
       ))}
