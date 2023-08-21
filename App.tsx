@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {Text, View, StyleSheet, Modal, TouchableOpacity} from 'react-native';
 import {Board} from './src/components/Board';
 
@@ -27,7 +27,17 @@ const App: React.FC = () => {
     Array(9).fill(null),
   );
   const [xIsNext, setXIsNext] = useState<boolean>(true);
+  const [showWelcomeModal, setShowWelcomeModal]= useState<boolean>(true)
   const [modalVisible, setModalVisible] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (showWelcomeModal) {
+      const timer = setTimeout(() => {
+        setShowWelcomeModal(false);
+      }, 3000);
+      return () => clearTimeout(timer);// cleanup function that clears timer if component is unmounted before timer
+    }
+  }, [showWelcomeModal]);
 
   const winner = calculateWinner(squares);
   let status;
@@ -59,6 +69,21 @@ const App: React.FC = () => {
 
   return (
     <View style={styles.container}>
+      {/* Welcome Modal */}
+      <Modal
+        animationType='fade'
+        transparent={true}
+        visible={showWelcomeModal}
+        presentationStyle='overFullScreen'
+      >
+        <View style={styles.modalContainer}>
+          <View style={styles.modalView}>
+            <Text style={styles.modalText}>Welcome! Let's play!</Text>
+          </View>
+        </View>
+      </Modal>
+
+      {/* Winner or Status Modal */}
       <Modal
         animationType='fade'
         transparent={true}
@@ -76,7 +101,11 @@ const App: React.FC = () => {
           </View>
         </View>
       </Modal>
+
+      {/* Game Status Text */}
       <Text>{status}</Text>
+
+      {/* Tic Tac Toe Board */}
       <Board squares={squares} onPress={handlePress} />
     </View>
   );
