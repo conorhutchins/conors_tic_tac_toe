@@ -1,32 +1,17 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 
-// define the type for a user
-type User = {
-    id: string;
-    name: string;
-    wins: number;
-};
-
-// intial state for the users slice
-const initialSlice: User[] = [];
+// Define an initial state
+const initialState: {wins: number}[] = [];
 
 const usersSlice = createSlice({
-    name: 'users',
-    initialState,
-    reducers: {
-      // Action to add a user
-      addUser: (state, action: PayloadAction<{id: string; name: string}>) => {
-        state.push({ id: action.payload.id, name: action.payload.name, wins: 0 });
-      },
-      // Action to increment the wins for a user
-      incrementWins: (state, action: PayloadAction<string>) => {
-        const user = state.find(u => u.id === action.payload);
-        if (user) {
-          user.wins += 1;
-        }
-      }
-    }
-  });
-  
-  export const { addUser, incrementWins } = usersSlice.actions;
-  export default usersSlice.reducer;
+  name: 'users',
+  initialState,
+  reducers: {
+    incrementWins: (state, action: PayloadAction<number>) => {
+      state[action.payload].wins += 1;
+    },
+  },
+});
+
+export const {incrementWins} = usersSlice.actions;
+export default usersSlice.reducer;
